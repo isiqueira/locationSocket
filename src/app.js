@@ -79,10 +79,10 @@ io.on("connection", async  socket => {
 
     locations.push(location);
     console.log(locations);
-    socket.broadcast.emit("locations", locations);
+    socket.broadcast.emit("locations", location);
   });
 
-  io.emit("locations", location);
+  io.emit("locations", locations);
 
 });
 
