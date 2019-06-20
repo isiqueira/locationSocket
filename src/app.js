@@ -43,12 +43,13 @@ io.on("connection", async  socket => {
   locations = [];
   socket.on("change", async location =>
   {
-    
+    console.log('Location change');
+    console.log(location);
     const locationIndex = locations.findIndex(lo => lo.idDevice === location.idDevice);
 
     if ( locationIndex > -1)
       locations.splice(locationIndex , 1);
-    
+
      const nearCheckpoint = await CheckPoint.find({
         gpsLocation: {
          $near: {
@@ -60,7 +61,10 @@ io.on("connection", async  socket => {
          }
         }
        }).exec();
-       console.log(nearCheckpoint);
+
+       //console.log(`Checkpoint near`);
+       
+       
        nearCheckpoint.forEach(near => { 
          console.log(near._id);
 
@@ -79,4 +83,4 @@ io.on("connection", async  socket => {
 
 });
 
-http.listen(process.env.PORT || 3000);
+http.listen(process.env.PORT || 4000);
