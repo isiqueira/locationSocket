@@ -62,15 +62,16 @@ io.on("connection", async  socket => {
         }
        }).exec();
 
-       //console.log(`Checkpoint near`);
+       console.log(`Checkpoint near`);
+       console.log(nearCheckpoint);
        
        
-       nearCheckpoint.forEach(near => { 
-         console.log(near._id);
+       nearCheckpoint.forEach(near => {
 
+         console.log('Have a checkpoint near!');
+         console.log(near._id);
          console.log('checkpoint-'+ loggedCheckpoints[near._id]);
          io.to('checkpoint-'+ near._id).emit('trucksnear', location);
-         //io.to('match-'+ req.params.id).emit('video', req.body.video)
          console.log(loggedCheckpoints[near._id]);
          
        });
