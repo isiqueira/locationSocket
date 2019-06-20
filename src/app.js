@@ -45,6 +45,8 @@ io.on("connection", async  socket => {
   {
     console.log('Location change');
     console.log(location);
+    
+    //Procuro se ja tenho a localizacao desse device
     const locationIndex = locations.findIndex(lo => lo.idDevice === location.idDevice);
 
     if ( locationIndex > -1)
@@ -64,8 +66,7 @@ io.on("connection", async  socket => {
 
        console.log(`Checkpoint near`);
        console.log(nearCheckpoint);
-       
-       
+
        nearCheckpoint.forEach(near => {
 
          console.log('Have a checkpoint near!');
@@ -77,6 +78,7 @@ io.on("connection", async  socket => {
        });
 
     locations.push(location);
+    console.log(locations);
     socket.broadcast.emit("locations", locations);
   });
 
