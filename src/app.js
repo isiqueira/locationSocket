@@ -82,7 +82,7 @@ io.on("connection", async  socket => {
     socket.broadcast.emit("locations", locations);
   });
 
-  io.emit("locations", locations);
+  io.emit("locations", location);
 
 });
 
