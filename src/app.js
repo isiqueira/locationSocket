@@ -55,7 +55,7 @@ io.on("connection", async  socket => {
      const nearCheckpoint = await CheckPoint.find({
         gpsLocation: {
          $near: {
-          $maxDistance: 1000,
+          $maxDistance: 2000,
           $geometry: {
            type: "Point",
            coordinates: [location.longitude, location.latitude]
