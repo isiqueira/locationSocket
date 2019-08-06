@@ -4,15 +4,19 @@ const io = require('socket.io')(http);
 const mongoose = require('mongoose');
 const config = require('../config');
 const loggedCheckpoints = [];
-console.log(config.connString);
 
-mongoose.connect(config.connString, { useNewUrlParser: true }).then( () => { 
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(process.env.MONGO_DATABASE);
+
+mongoose.connect(process.env.MONGO_DATABASE, { useNewUrlParser: true }).then( () => { 
   console.log('MongoDB Connected');
 }).catch(err => { 
    console.error(err);
 });
 
 const CheckPoint = require('./schemas/checkpoint.model');
+const ForbiddenArea = require('./schemas/forbidden-area.model');
 
 io.on("connection", async  socket => {
   
@@ -45,7 +49,7 @@ io.on("connection", async  socket => {
   {
     console.log('Location change');
     console.log(location);
-    
+   
     //Procuro se ja tenho a localizacao desse device
     const locationIndex = locations.findIndex(lo => lo.idDevice === location.idDevice);
 
