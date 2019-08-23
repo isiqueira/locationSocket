@@ -46,7 +46,7 @@ io.on("connection", async  socket => {
 
     if (error || _redisData !== null) {
       
-      io.emit( "OnConnect", JSON.parse(locations));
+      io.emit( "on_connect", JSON.parse(locations));
     
     }
   });
@@ -117,8 +117,8 @@ io.on("connection", async  socket => {
       if (error || _redisData !== null) {
     
         const _data = JSON.parse(_redisData);
-        console.log('_redisData');
-        console.log(JSON.parse(_redisData));
+        //console.log('_redisData');
+        //console.log(JSON.parse(_redisData));
         _data.push(location);
         redisClient.set( cacheSocketKey, JSON.stringify(_data), redis.print );
         //io.emit( "OnConnect", JSON.parse(locations));
