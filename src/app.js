@@ -6,6 +6,7 @@ const config = require('../config');
 const loggedCheckpoints = [];
 const locations = [];
 const dotenv = require('dotenv');
+const cacheSocketKey  = 'CacheDataSocket';
 dotenv.config();
 console.log(process.env.MONGO_DATABASE);
 
@@ -13,6 +14,23 @@ mongoose.connect(process.env.MONGO_DATABASE, { useNewUrlParser: true }).then( ()
   console.log('MongoDB Connected');
 }).catch(err => { 
    console.error(err);
+});
+
+const redis = require("redis");
+//const redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST, );
+
+const redisClient = redis.createClient({
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD,
+});
+
+redisClient.on('connect', function() {
+    console.log('Redis client connected');
+});
+
+redisClient.on("error", function (err) {
+    console.log("Error " + err);
 });
 
 const CheckPoint = require('./schemas/checkpoint.model');
@@ -23,6 +41,15 @@ io.on("connection", async  socket => {
   console.info(`Client connected [id=${socket.id}]`);
   const checkpointId = socket.handshake.query.checkpoint;
   console.info(checkpointId);
+
+  redisClient.get(cacheSocketKey, async(error, _redisData) => {
+
+    if (error || _redisData !== null) {
+      
+      io.emit( "OnConnect", JSON.parse(locations));
+    
+    }
+  });
   
 
   //console.log(loggedCheckpoints);
@@ -49,6 +76,7 @@ io.on("connection", async  socket => {
 
   socket.on("change", async location =>
   {
+
 //    console.log('Location change');
 //    console.log(location);
    
@@ -58,7 +86,8 @@ io.on("connection", async  socket => {
     if ( locationIndex > -1)
       locations.splice(locationIndex , 1);
 
-     const nearCheckpoint = await CheckPoint.find({
+     const nearCheckpoint = await CheckPoint.find(
+     {
         gpsLocation: {
          $near: {
           $maxDistance: 2000,
@@ -68,7 +97,7 @@ io.on("connection", async  socket => {
           }
          }
         }
-       }).exec();
+      }).exec();
 
 //     console.log(`Checkpoint near`);
 //       console.log(nearCheckpoint);
@@ -83,7 +112,20 @@ io.on("connection", async  socket => {
          
        });
 
-    locations.push(location);
+    redisClient.get(cacheSocketKey, async(error, _redisData) => {
+
+      if (error || _redisData !== null) {
+    
+        const _data = JSON.parse(_redisData);
+        _data.push(location);
+        redisClient.set(req.params.idTravel, JSON.stringify(_data), redis.print);
+        //io.emit( "OnConnect", JSON.parse(locations));
+      
+      }
+    });
+  
+
+    redisClient.set(req.params.idTravel, JSON.stringify(location), redis.print);
     console.log(locations);
     socket.broadcast.emit("locations", location);
   });
