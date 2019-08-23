@@ -120,15 +120,16 @@ io.on("connection", async  socket => {
         console.log('_redisData');
         console.log(JSON.parse(_redisData));
         _data.push(location);
-        redisClient.set(req.params.idTravel, JSON.stringify(_data), redis.print);
+        redisClient.set( cacheSocketKey, JSON.stringify(_data), redis.print );
         //io.emit( "OnConnect", JSON.parse(locations));
       
       }
     });
 
-    redisClient.set(cacheSocketKey, JSON.stringify(location), redis.print);
+    redisClient.set(cacheSocketKey, JSON.stringify(locations), redis.print);
     console.log(locations);
     socket.broadcast.emit("locations", location);
+
   });
 
   
