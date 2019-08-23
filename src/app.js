@@ -123,9 +123,8 @@ io.on("connection", async  socket => {
       
       }
     });
-  
 
-    redisClient.set(req.params.idTravel, JSON.stringify(location), redis.print);
+    redisClient.set(cacheSocketKey, JSON.stringify(location), redis.print);
     console.log(locations);
     socket.broadcast.emit("locations", location);
   });
