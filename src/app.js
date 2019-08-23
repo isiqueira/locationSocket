@@ -117,6 +117,7 @@ io.on("connection", async  socket => {
       if (error || _redisData !== null) {
     
         const _data = JSON.parse(_redisData);
+        console.log('_redisData');
         console.log(JSON.parse(_redisData));
         _data.push(location);
         redisClient.set(req.params.idTravel, JSON.stringify(_data), redis.print);
