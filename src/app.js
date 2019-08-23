@@ -116,13 +116,13 @@ io.on("connection", async  socket => {
 
       if (error || _redisData !== null) {
     
-        const _data = JSON.parse(_redisData);
+        locations = JSON.parse(_redisData);
         //console.log('_redisData');
         //console.log(JSON.parse(_redisData));
-        _data.push(location);
-        redisClient.set( cacheSocketKey, JSON.stringify(_data), redis.print );
+        locations.push(location);
+        redisClient.set( cacheSocketKey, JSON.stringify(locations), redis.print );
         //io.emit( "OnConnect", JSON.parse(locations));
-      
+        //locations = _data;  
       }
     });
 
