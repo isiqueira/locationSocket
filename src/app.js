@@ -4,7 +4,7 @@ const io = require('socket.io')(http);
 const mongoose = require('mongoose');
 const config = require('../config');
 const loggedCheckpoints = [];
-
+const locations = [];
 const dotenv = require('dotenv');
 dotenv.config();
 console.log(process.env.MONGO_DATABASE);
@@ -44,7 +44,9 @@ io.on("connection", async  socket => {
 
   console.log(loggedCheckpoints);
   
-  locations = [];
+  //locations = [];
+  io.emit("locations", locations);
+
   socket.on("change", async location =>
   {
     console.log('Location change');
@@ -86,7 +88,7 @@ io.on("connection", async  socket => {
     socket.broadcast.emit("locations", location);
   });
 
-  io.emit("locations", locations);
+  
 
 });
 
