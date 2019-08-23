@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_DATABASE, { useNewUrlParser: true }).then( ()
 });
 
 const CheckPoint = require('./schemas/checkpoint.model');
-const ForbiddenArea = require('./schemas/forbidden-area.model');
+//const ForbiddenArea = require('./schemas/forbidden-area.model');
 
 io.on("connection", async  socket => {
   
@@ -49,8 +49,8 @@ io.on("connection", async  socket => {
 
   socket.on("change", async location =>
   {
-    console.log('Location change');
-    console.log(location);
+//    console.log('Location change');
+//    console.log(location);
    
     //Procuro se ja tenho a localizacao desse device
     const locationIndex = locations.findIndex(lo => lo.idDevice === location.idDevice);
@@ -70,8 +70,8 @@ io.on("connection", async  socket => {
         }
        }).exec();
 
-       console.log(`Checkpoint near`);
-       console.log(nearCheckpoint);
+//     console.log(`Checkpoint near`);
+//       console.log(nearCheckpoint);
 
        nearCheckpoint.forEach(near => {
 
