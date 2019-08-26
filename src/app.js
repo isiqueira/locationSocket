@@ -4,7 +4,7 @@ const io = require('socket.io')(http);
 const mongoose = require('mongoose');
 const config = require('../config');
 const loggedCheckpoints = [];
-const locations = [];
+let locations = [];
 const dotenv = require('dotenv');
 const cacheSocketKey  = 'CacheDataSocket';
 dotenv.config();
