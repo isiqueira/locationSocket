@@ -103,6 +103,16 @@ io.on("connection", async  socket => {
       if (error || _redisData !== null) {
     
         locations = JSON.parse(_redisData);
+
+        for( var i = 0; i < locations.length; i++) {
+        
+
+          if ( locations[i].idDevice == location.idDevice) {
+            locations.splice(i, 1);
+            i--;
+          }
+        }
+
         locations.push(location);
         redisClient.set( cacheSocketKey, JSON.stringify(locations), redis.print );
 
