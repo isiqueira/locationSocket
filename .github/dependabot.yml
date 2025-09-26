@@ -1,6 +1,18 @@
+
 version: 2
 updates:
+  # Enable version updates for npm
   - package-ecosystem: "npm"
+    # Look for `package.json` in the root directory
+    directory: "/"
+    # Check for updates every day
+    schedule:
+      interval: "daily"
+    # Limit the number of open pull requests to 10
+    open-pull-requests-limit: 10
+
+  # You can also add configuration for your GitHub Actions
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
