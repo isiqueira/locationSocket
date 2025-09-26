@@ -1,8 +1,6 @@
-const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mongoose = require('mongoose');
-const config = require('../config');
 const loggedCheckpoints = [];
 let locations = [];
 const dotenv = require('dotenv');
@@ -39,8 +37,6 @@ io.on("connection", async  socket => {
   console.info(`Client connected [id=${socket.id}]`);
   const checkpointId = socket.handshake.query.checkpoint;
   console.info(checkpointId);
-
-  const _data = [];
 
   redisClient.get(cacheSocketKey, async(error, _redisData) => {
 
