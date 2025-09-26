@@ -19,7 +19,7 @@
     "lowdb": "^1.0.0",
     "mongoose": "^5.5.1",
     "nodemon": "^1.18.10",
-    "redis": "^2.8.0",
+    "redis": "^5.8.2",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {}
