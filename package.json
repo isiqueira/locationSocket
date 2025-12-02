@@ -13,7 +13,7 @@
   "dependencies": {
     "@types/socket.io": "^3.0.2",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "guid": "0.0.12",
     "lokijs": "^1.5.12",
     "lowdb": "^7.0.1",
