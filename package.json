@@ -2,14 +2,14 @@
   "name": "locationsocket",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "test": "node --test src/**/*.test.js",
     "test:coverage": "node --test --experimental-test-coverage src/**/*.test.js",
-    "dev": "concurrently --names \"backend,frontend\" --prefix-colors \"cyan,magenta\" \"nodemon src/app.js\" \"npm run dev --prefix frontend\"",
-    "start:dev": "nodemon src/app.js",
-    "start": "node src/app.js",
+    "dev": "concurrently --names \"backend,frontend\" --prefix-colors \"cyan,magenta\" \"nodemon src/server.js\" \"npm run dev --prefix frontend\"",
+    "start:dev": "nodemon src/server.js",
+    "start": "node src/server.js",
     "sync-cities": "node src/sync-cities.js",
     "clear-cities": "node src/clear-cities.js",
     "test:sync-cities": "node src/test-sync-cities.js"

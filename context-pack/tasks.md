@@ -27,7 +27,7 @@ Status: `[ ]` pendente | `[~]` em andamento | `[x]` concluído
   - Resolvido: `socket.emit` em vez de `io.emit` no `SocketManager`
 
 - [x] **#5 — docker-compose.yml sem variáveis de ambiente**
-  - Resolvido: bloco `environment` completo com `MONGO_DATABASE`, `REDIS_HOST`, `REDIS_PORT`, `JWT_SECRET`, `CITIES_DATA_FORM_IBGE`
+  - Resolvido: bloco `environment` completo com `MONGO_DATABASE`, `REDIS_HOST`, `REDIS_PORT`, `JWT_SECRET`, `CITIES_DATA_FROM_IBGE`
 
 ---
 
@@ -79,7 +79,7 @@ Status: `[ ]` pendente | `[~]` em andamento | `[x]` concluído
   - **Arquivo:** `src/app.js:62`
   - Credenciais `admin/password` hardcoded. Necessário validar contra banco de dados.
 
-- [ ] **#16 — `CITIES_DATA_FORM_IBGE` não configurada no docker-compose**
+- [ ] **#16 — `CITIES_DATA_FROM_IBGE` não configurada no docker-compose**
   - Variável presente e comentada no `docker-compose.yml` com exemplo de URL do IBGE.
   - Necessário preencher antes de rodar `npm run sync-cities` em produção.
 
@@ -118,4 +118,4 @@ Incorporado em `locationSocket`:
 ## Ordem de execução sugerida (pendentes)
 
 1. #15 (JWT hardcoded) — segurança
-2. #16 (CITIES_DATA_FORM_IBGE) — configuração de produção
+2. #16 (CITIES_DATA_FROM_IBGE) — configuração de produção

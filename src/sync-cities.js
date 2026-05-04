@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import City from './schemas/city.model.js';
+import City from './modules/cities/city.model.js';
 import states from './citiesData/states.dictionary.js';
 import statesNames from './citiesData/states-names.dictionary.js';
 
@@ -24,17 +24,17 @@ const syncCities = async (state) => {
     console.log(`Starting city sync for state ${statesNames[state]}`);
     const filePath = states[state];
 
-    // Prefer local file; fall back to remote URL if CITIES_DATA_FORM_IBGE is set
+    // Prefer local file; fall back to remote URL if CITIES_DATA_FROM_IBGE is set
     const localPath = path.join(__dirname, 'citiesData', filePath);
     let geojsonData;
     if (fs.existsSync(localPath)) {
       geojsonData = JSON.parse(fs.readFileSync(localPath, 'utf-8'));
-    } else if (process.env.CITIES_DATA_FORM_IBGE) {
-      const url = `${process.env.CITIES_DATA_FORM_IBGE}/${filePath}`;
+    } else if (process.env.CITIES_DATA_FROM_IBGE) {
+      const url = `${process.env.CITIES_DATA_FROM_IBGE}/${filePath}`;
       const response = await axios.get(url);
       geojsonData = response.data;
     } else {
-      throw new Error(`Local file not found and CITIES_DATA_FORM_IBGE is not set: ${localPath}`);
+      throw new Error(`Local file not found and CITIES_DATA_FROM_IBGE is not set: ${localPath}`);
     }
 
     for (const feature of geojsonData.features) {

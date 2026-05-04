@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import mongoose from 'mongoose';
 
 // Importa os models — validateSync() não precisa de conexão
-import CheckPoint from './checkpoint.model.js';
-import City from './city.model.js';
-import ForbiddenArea from './forbidden-area.model.js';
+import CheckPoint from '../modules/checkpoints/checkpoint.model.js';
+import City from '../modules/cities/city.model.js';
+import ForbiddenArea from '../modules/forbidden-areas/forbidden-area.model.js';
 
 describe('Schema — Checkpoint', () => {
   it('aceita documento válido sem erros de validação', () => {

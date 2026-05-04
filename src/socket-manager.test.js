@@ -1,6 +1,6 @@
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
-import SocketManager from './socket-manager.js';
+import SocketManager from './modules/tracking/socket-manager.js';
 
 // --- Helpers de mock ---
 

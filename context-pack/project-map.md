@@ -78,7 +78,7 @@ REDIS_PASSWORD=
 REDIS_USERNAME=
 PORT=4000
 JWT_SECRET=changeme
-CITIES_DATA_FORM_IBGE=https://url-base-do-ibge/geojson
+CITIES_DATA_FROM_IBGE=https://url-base-do-ibge/geojson
 ```
 O `.env` é **gitignored** e **não está no docker-compose.yml** — deve ser criado manualmente.
 

@@ -2,9 +2,9 @@ import { describe, it, before, after, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildApp } from './app.js';
 
-import * as CityModel from './schemas/city.model.js';
-import * as ForbiddenAreaModel from './schemas/forbidden-area.model.js';
-import * as CheckPointModel from './schemas/checkpoint.model.js';
+import * as CityModel from './modules/cities/city.model.js';
+import * as ForbiddenAreaModel from './modules/forbidden-areas/forbidden-area.model.js';
+import * as CheckPointModel from './modules/checkpoints/checkpoint.model.js';
 
 // Redis mock — nunca conecta de verdade
 function makeRedisMock() {

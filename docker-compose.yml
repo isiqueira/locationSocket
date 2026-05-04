@@ -16,7 +16,7 @@ services:
       # URL base dos arquivos GeoJSON para sincronização de cidades (opcional).
       # Os arquivos locais em src/citiesData/geojson/ têm prioridade.
       # Só é necessário se os arquivos locais forem removidos.
-      - CITIES_DATA_FORM_IBGE=https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson
+      - CITIES_DATA_FROM_IBGE=https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson
     depends_on:
       - redis
       - mongodb
