@@ -160,5 +160,7 @@ Italo Siqueira
 Senior Software Engineer focused on enterprise systems, distributed architecture, integrations, logistics/WMS and technical leadership.
 
 LinkedIn: https://www.linkedin.com/in/italo-araujo-siqueira
+
 GitHub: https://github.com/isiqueira
+
 Website: https://italosiqueira.dev
