@@ -17,7 +17,7 @@
     "guid": "0.0.12",
     "lokijs": "^1.5.12",
     "lowdb": "^7.0.1",
-    "mongoose": "^9.1.5",
+    "mongoose": "^9.6.1",
     "nodemon": "^3.1.14",
     "redis": "^5.12.1",
     "socket.io": "^4.8.3"
