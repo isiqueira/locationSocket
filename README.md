@@ -80,6 +80,7 @@ Sends a live location update.
   "longitude": -46.633308,
   "timestamp": "2026-05-04T10:00:00.000Z"
 }
+```
 Server emits: locations
 
 Broadcasts location updates to connected clients.
@@ -95,27 +96,30 @@ Notifies clients when a device enters a forbidden area.
 Running locally
 
 Clone the repository:
-
+```bash
 git clone https://github.com/isiqueira/locationSocket.git
 cd locationSocket
-
+```
 Install dependencies:
-
+```bash
 npm install
-
+```
 Start the backend:
-
+```bash
 npm start
-
+```
 Or run in development mode:
-
+```bash
 npm run start:dev
+```
 Running with Docker
+```bash
 docker compose up --build
-
+```
 Stop the environment:
-
+```bash
 docker compose down
+```
 Environment variables
 
 Create a .env file based on .env.example.
