@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocationSocket</string>
+    <string name="title_settings">Configurações</string>
+
+    <!-- Labels -->
+    <string name="label_status">Status da conexão</string>
+    <string name="label_coordinates">Coordenadas</string>
+    <string name="label_city">Cidade atual</string>
+    <string name="label_server_url">URL do servidor</string>
+
+    <!-- Status -->
+    <string name="status_connected">Conectado</string>
+    <string name="status_disconnected">Desconectado</string>
+    <string name="status_connecting">Conectando…</string>
+    <string name="status_tracking">Rastreando…</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_waiting">Aguardando GPS…</string>
+    <string name="placeholder_city_not_found">Fora de área mapeada</string>
+
+    <!-- Buttons -->
+    <string name="btn_start_tracking">Iniciar rastreamento</string>
+    <string name="btn_stop_tracking">Parar rastreamento</string>
+    <string name="btn_settings">⚙ Configurar servidor</string>
+    <string name="btn_save">Salvar</string>
+    <string name="btn_reset_default">Restaurar padrão</string>
+
+    <!-- Settings hints -->
+    <string name="hint_server_url">http://192.168.1.10:4000</string>
+    <string name="hint_server_url_detail">Emulador: http://10.0.2.2:4000 · Dispositivo físico: IP da máquina na rede local</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_id">location_tracking</string>
+    <string name="notification_channel_name">Rastreamento de localização</string>
+    <string name="notification_title">LocationSocket</string>
+    <string name="notification_text">Enviando localização…</string>
+
+    <!-- Errors -->
+    <string name="error_permission_denied">Permissão de localização negada</string>
+    <string name="error_gps_unavailable">GPS indisponível</string>
+    <string name="error_server_url_empty">Informe a URL do servidor</string>
+    <string name="error_connection_failed">Falha ao conectar ao servidor</string>
+
+    <!-- Prefs -->
+    <string name="pref_file">locationsocket_prefs</string>
+    <string name="pref_server_url">server_url</string>
+    <string name="default_server_url">http://10.0.2.2:4000</string>
+</resources>

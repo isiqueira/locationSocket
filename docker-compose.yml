@@ -6,10 +6,26 @@ services:
       - "4000:4000"
     volumes:
       - .:/home/node/app
+    environment:
+      - MONGO_DATABASE=mongodb://mongodb:27017/locationdb
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=
+      - PORT=4000
+      - JWT_SECRET=changeme
+      # URL base dos arquivos GeoJSON para sincronização de cidades (opcional).
+      # Os arquivos locais em src/citiesData/geojson/ têm prioridade.
+      # Só é necessário se os arquivos locais forem removidos.
+      - CITIES_DATA_FORM_IBGE=https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson
+    depends_on:
+      - redis
+      - mongodb
+
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
+
   mongodb:
     image: mongo
     ports:

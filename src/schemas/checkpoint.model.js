@@ -1,23 +1,24 @@
-'use sctrict';
+'use strict';
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const schema = new Schema(
     {
-        slug: { type: 'String' },
-        name: { type: 'String' },
-        gpsLocation: { 
-            type: { type: 'String' },
-            coordinates: { type: [ 'Number' ] }
+        slug: { type: String },
+        name: { type: String },
+        gpsLocation: {
+            type: { type: String },
+            coordinates: { type: [Number] }
         },
-        address: { type: 'String' },
-        checkedColor: { type: 'String' },
-        isActive: { type: 'Boolean' },
-        isFixedLocation: { type: 'Boolean' }
-    } , { collection: 'Checkpoints' }
+        address: { type: String },
+        checkedColor: { type: String },
+        isActive: { type: Boolean },
+        isFixedLocation: { type: Boolean }
+    },
+    { collection: 'Checkpoints' }
 );
 
-schema.index({ gpsLocation: "2dsphere" });
+schema.index({ gpsLocation: '2dsphere' });
 
-module.exports = mongoose.model('Checkpoints', schema);
+export default mongoose.model('Checkpoints', schema);

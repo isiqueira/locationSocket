@@ -1,0 +1,61 @@
+# ── Node ──────────────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tgz
+.npm
+
+# ── Frontend (não vai para o container do backend) ────────────────────────────
+frontend/
+
+# ── Android ───────────────────────────────────────────────────────────────────
+android/
+
+# ── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# ── Testes & coverage ─────────────────────────────────────────────────────────
+**/*.test.js
+coverage/
+.nyc_output/
+.c8/
+
+# ── Build / cache ─────────────────────────────────────────────────────────────
+dist/
+build/
+.cache/
+.vite/
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+.git/
+.gitignore
+
+# ── Editor / IDE ──────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.suo
+*.sw?
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Docs / contexto de planejamento ───────────────────────────────────────────
+context-pack/
+README.md
+*.md
+
+# ── Docker (não recursivo) ────────────────────────────────────────────────────
+Dockerfile
+docker-compose*.yml
+.dockerignore
