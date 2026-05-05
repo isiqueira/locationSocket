@@ -1,7 +1,7 @@
 {
-  "name": "locationsocket",
+  "name": "logistics-location-tracking-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Real-time geolocation backend for logistics tracking, checkpoints and forbidden-area detection using Fastify, Socket.IO, Redis and MongoDB.",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
