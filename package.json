@@ -14,8 +14,8 @@
     "clear-cities": "node src/clear-cities.js",
     "test:sync-cities": "node src/test-sync-cities.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Italo Siqueira",
+  "license": "MIT",
   "dependencies": {
     "@fastify/cors": "^9.0.1",
     "@fastify/jwt": "^8.0.1",
