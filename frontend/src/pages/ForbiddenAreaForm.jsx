@@ -57,6 +57,14 @@ export default function ForbiddenAreaForm() {
       removalMode: true,
     })
 
+    // No modo criação, centraliza no usuário
+    if (!isEdit && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => map.setView([coords.latitude, coords.longitude], 13),
+        () => {}
+      )
+    }
+
     // Se edição, renderiza polígono existente
     if (isEdit) {
       api.get(`/forbidden-areas/${id}`).then(res => {

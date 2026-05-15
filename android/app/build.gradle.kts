@@ -50,4 +50,5 @@ dependencies {
         exclude(group = "org.json", module = "json") // já incluso no Android SDK
     }
     implementation(libs.okhttp)
+    implementation(libs.osmdroid.android)
 }

@@ -307,6 +307,19 @@ tr:hover td { background: #fafafa; }
   flex-direction: column;
 }
 
+/* Stats dentro de um único card (CheckpointLive) */
+.cp-live-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cp-live-stat {
+  display: flex;
+  flex-direction: column;
+}
+
 .live-stat-label {
   font-size: 0.75rem;
   color: #888;
@@ -343,6 +356,91 @@ tr:hover td { background: #fafafa; }
   border-color: #e94560;
 }
 
+/* ── Combobox ────────────────────────────────── */
+.combobox {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.combobox-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.combobox-input-wrap input {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  background: #fff;
+}
+
+.combobox-input-wrap input:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+.combobox-clear {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.combobox-clear:hover { color: #555; }
+
+.combobox-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 100;
+  max-height: 240px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0.25rem 0;
+}
+
+.combobox-option {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #1a1a2e;
+}
+
+.combobox-option:hover {
+  background: #f0f4ff;
+  color: #2255cc;
+}
+
+/* ── Pagination ─────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  margin-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.pagination-info {
+  font-size: 0.85rem;
+  color: #666;
+}
+
 /* ── Loading / Empty ────────────────────────── */
 .loading-text {
   text-align: center;
@@ -376,9 +474,13 @@ tr:hover td { background: #fafafa; }
   padding: 2rem;
 }
 
-.where-icon {
-  font-size: 3rem;
+.where-map {
+  width: 240px;
+  height: 180px;
   flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
 }
 
 .where-info h2 {
@@ -390,6 +492,109 @@ tr:hover td { background: #fafafa; }
 .where-info p {
   color: #666;
   margin-top: 0.25rem;
+}
+
+/* ── City detail ─────────────────────────────── */
+.city-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+  gap: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.detail-list dt {
+  color: #999;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.detail-list dd {
+  color: #1a1a2e;
+  align-self: center;
+}
+
+/* ── Forbidden areas grid ────────────────────── */
+.fa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.fa-card {
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.fa-card-map {
+  height: 160px;
+  width: 100%;
+}
+
+.fa-card-body {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.fa-card-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: #1a1a2e;
+}
+
+.fa-card-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ── Polygon label (Leaflet tooltip) ─────────── */
+.polygon-label {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: #1a1a2e;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.polygon-label::before { display: none; }
+
+/* ── Live dot ────────────────────────────────── */
+.live-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.live-dot--green {
+  background: #27ae60;
+  animation: dot-pulse 1.6s ease-in-out infinite;
+}
+
+.live-dot--red { background: #e74c3c; }
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(39,174,96,0.5); }
+  50%       { opacity: 0.8; box-shadow: 0 0 0 5px rgba(39,174,96,0); }
 }
 
 /* ── Geoman overrides ────────────────────────── */

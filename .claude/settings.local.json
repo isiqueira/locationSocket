@@ -1,6 +1,23 @@
 {
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:nominatim.org)",
+      "WebFetch(domain:photon.komoot.io)",
+      "Bash(rtk npx *)",
+      "WebFetch(domain:opencagedata.com)",
+      "Bash(rtk playwright *)",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "Bash(node pw-check.js)",
+      "Bash(mv \"D:\\\\dev\\\\locationSocket\\\\pw-check.js\" \"D:\\\\dev\\\\locationSocket\\\\pw-check.cjs\")",
+      "Bash(node pw-check.cjs)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(rtk git *)",
+      "Bash(./gradlew assembleDebug)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "sentry"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

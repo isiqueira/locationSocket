@@ -1,8 +1,25 @@
 import { useState, useEffect } from 'react'
+import { MapContainer, TileLayer, GeoJSON, Marker } from 'react-leaflet'
+import L from 'leaflet'
 import api from '../api/client'
+import stateNames from '../utils/stateNames'
+
+import iconUrl from 'leaflet/dist/images/marker-icon.png'
+import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+
+const defaultIcon = L.icon({ iconUrl, shadowUrl: iconShadow, iconAnchor: [12, 41] })
+
+function cityCenter(geometry) {
+  try {
+    const b = L.geoJSON(geometry).getBounds()
+    if (!b.isValid()) return null
+    const c = b.getCenter()
+    return [c.lat, c.lng]
+  } catch { return null }
+}
 
 export default function Dashboard() {
-  const [city, setCity] = useState(undefined) // undefined = não buscou ainda
+  const [city, setCity] = useState(undefined)
   const [coords, setCoords] = useState(null)
   const [geoError, setGeoError] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -45,12 +62,38 @@ export default function Dashboard() {
 
         {!loading && !geoError && city !== undefined && (
           <div className="where-card">
-            <div className="where-icon">📍</div>
+            <div className="where-map">
+              <MapContainer
+                center={
+                  (city?.geometry ? cityCenter(city.geometry) : null)
+                  ?? (coords ? [coords.latitude, coords.longitude] : [-15.77972, -47.92972])
+                }
+                zoom={city?.geometry ? 9 : coords ? 11 : 4}
+                style={{ height: '100%', width: '100%' }}
+                zoomControl={false}
+                scrollWheelZoom={false}
+                dragging={false}
+                doubleClickZoom={false}
+                attributionControl={false}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                {city?.geometry && (
+                  <GeoJSON
+                    data={city.geometry}
+                    style={{ color: '#e94560', weight: 2, fillColor: '#e94560', fillOpacity: 0.2 }}
+                  />
+                )}
+                {!city && coords && (
+                  <Marker position={[coords.latitude, coords.longitude]} icon={defaultIcon} />
+                )}
+              </MapContainer>
+            </div>
+
             <div className="where-info">
               {city ? (
                 <>
                   <h2>{city.name}</h2>
-                  <p>Estado: <strong>{city.state}</strong></p>
+                  <p>Estado: <strong>{stateNames[city.state] ?? city.state}</strong></p>
                   {coords && (
                     <p style={{ marginTop: '0.25rem', color: '#aaa', fontSize: '0.8rem' }}>
                       {coords.latitude.toFixed(5)}, {coords.longitude.toFixed(5)}

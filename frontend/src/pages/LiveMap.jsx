@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet'
+import { useState, useEffect } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet'
 import L from 'leaflet'
 import api from '../api/client'
 import { useSocket } from '../hooks/useSocket'
@@ -16,27 +16,22 @@ const cpIcon = L.icon({
   iconAnchor: [12, 41],
 })
 
-function FitBounds({ checkpoints }) {
-  const map = useMap()
-  useEffect(() => {
-    if (checkpoints.length === 0) return
-    const bounds = checkpoints
-      .filter(cp => cp.gpsLocation?.coordinates?.length === 2)
-      .map(cp => {
-        const [lng, lat] = cp.gpsLocation.coordinates
-        return [lat, lng]
-      })
-    if (bounds.length > 0) map.fitBounds(bounds, { padding: [40, 40] })
-  }, [checkpoints]) // eslint-disable-line
-  return null
+function checkpointsBounds(checkpoints) {
+  const pts = checkpoints
+    .map(cp => { const [lng, lat] = cp.gpsLocation?.coordinates ?? []; return [lat, lng] })
+    .filter(([lat, lng]) => isFinite(lat) && isFinite(lng))
+  if (!pts.length) return null
+  try {
+    const b = L.latLngBounds(pts)
+    return b.isValid() ? b : null
+  } catch { return null }
 }
 
 export default function LiveMap() {
-  const [devices, setDevices] = useState({}) // { idDevice: location }
-  const [checkpoints, setCheckpoints] = useState([])
+  const [devices, setDevices] = useState({})
+  const [checkpoints, setCheckpoints] = useState(null) // null = ainda carregando
   const socketRef = useSocket()
 
-  // Carrega checkpoints via REST
   useEffect(() => {
     api.get('/checkpoints').then(res => setCheckpoints(res.data))
   }, [])
@@ -63,6 +58,7 @@ export default function LiveMap() {
   }, [socketRef])
 
   const deviceList = Object.values(devices)
+  const bounds = checkpoints ? checkpointsBounds(checkpoints) : null
 
   return (
     <div>
@@ -77,55 +73,71 @@ export default function LiveMap() {
         </div>
         <div className="live-stat">
           <span className="live-stat-label">Checkpoints</span>
-          <span className="live-stat-value">{checkpoints.length}</span>
+          <span className="live-stat-value">{checkpoints?.length ?? '—'}</span>
         </div>
         <div className="live-stat" style={{ marginLeft: 'auto' }}>
           <span className="live-stat-label">Status</span>
-          <span className="live-stat-value" style={{ fontSize: '1rem', color: '#27ae60' }}>🔴 Ao vivo</span>
+          <span className="live-stat-value" style={{ fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <span className="live-dot live-dot--green" />
+            Ao vivo
+          </span>
         </div>
       </div>
 
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
         <div className="map-container-tall">
-          <MapContainer center={[-15.77972, -47.92972]} zoom={5} style={{ height: '100%', width: '100%' }}>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="© OpenStreetMap contributors"
-            />
-            <FitBounds checkpoints={checkpoints} />
-
-            {/* Checkpoints — marcador vermelho + raio de 2km */}
-            {checkpoints.map(cp => {
-              if (!cp.gpsLocation?.coordinates?.length) return null
-              const [lng, lat] = cp.gpsLocation.coordinates
-              return (
-                <React.Fragment key={cp._id}>
-                  <Marker position={[lat, lng]} icon={cpIcon}>
+          {checkpoints === null ? (
+            <p className="loading-text">Carregando mapa…</p>
+          ) : (
+            <MapContainer
+              {...(bounds
+                ? { bounds, boundsOptions: { padding: [40, 40] } }
+                : { center: [-15.77972, -47.92972], zoom: 5 }
+              )}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap contributors"
+              />
+              {checkpoints.map(cp => {
+                const [lng, lat] = cp.gpsLocation?.coordinates ?? []
+                if (!isFinite(lat) || !isFinite(lng)) return null
+                return (
+                  <Circle
+                    key={cp._id + '-circle'}
+                    center={[lat, lng]}
+                    radius={2000}
+                    pathOptions={{ color: '#e94560', fillColor: '#e94560', fillOpacity: 0.06, weight: 1.5 }}
+                  />
+                )
+              })}
+              {checkpoints.map(cp => {
+                const [lng, lat] = cp.gpsLocation?.coordinates ?? []
+                if (!isFinite(lat) || !isFinite(lng)) return null
+                return (
+                  <Marker key={cp._id} position={[lat, lng]} icon={cpIcon}>
                     <Popup>
                       <strong>{cp.name || 'Checkpoint'}</strong><br />
                       {cp.address || ''}
                     </Popup>
                   </Marker>
-                  <Circle
-                    center={[lat, lng]}
-                    radius={2000}
-                    pathOptions={{ color: '#e94560', fillColor: '#e94560', fillOpacity: 0.06, weight: 1.5 }}
-                  />
-                </React.Fragment>
-              )
-            })}
-
-            {/* Dispositivos — marcador azul */}
-            {deviceList.map(d => (
-              <Marker key={d.idDevice} position={[d.latitude, d.longitude]}>
-                <Popup>
-                  <strong>Dispositivo</strong><br />
-                  ID: {d.idDevice}<br />
-                  {d.latitude?.toFixed(5)}, {d.longitude?.toFixed(5)}
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+                )
+              })}
+              {deviceList.map(d => {
+                if (!isFinite(d.latitude) || !isFinite(d.longitude)) return null
+                return (
+                  <Marker key={d.idDevice} position={[d.latitude, d.longitude]}>
+                    <Popup>
+                      <strong>Dispositivo</strong><br />
+                      ID: {d.idDevice}<br />
+                      {d.latitude?.toFixed(5)}, {d.longitude?.toFixed(5)}
+                    </Popup>
+                  </Marker>
+                )
+              })}
+            </MapContainer>
+          )}
         </div>
       </div>
 

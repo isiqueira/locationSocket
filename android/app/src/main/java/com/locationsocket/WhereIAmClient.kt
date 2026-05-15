@@ -13,7 +13,8 @@ import java.util.concurrent.TimeUnit
 data class CityResult(
     val name: String,
     val state: String,
-    val externalId: Long?
+    val externalId: Long?,
+    val geometryJson: String?
 )
 
 /**
@@ -62,7 +63,8 @@ class WhereIAmClient(private val serverUrl: String) {
                     val city = CityResult(
                         name = json.optString("name", ""),
                         state = json.optString("state", ""),
-                        externalId = if (json.has("externalId")) json.getLong("externalId") else null
+                        externalId = if (json.has("externalId")) json.getLong("externalId") else null,
+                        geometryJson = json.optJSONObject("geometry")?.toString()
                     )
                     Log.d(TAG, "City: ${city.name} / ${city.state}")
                     onResult(city)

@@ -16,8 +16,10 @@ export async function cityRoutes(fastify) {
       const filter = {};
       if (request.query.state) filter.state = request.query.state;
       if (request.query.name) filter.name = request.query.name;
-      const cities = await cityService.findCities(filter);
-      return reply.code(200).send(cities);
+      const page = Math.max(1, parseInt(request.query.page) || 1);
+      const limit = Math.min(5000, Math.max(1, parseInt(request.query.limit) || 20));
+      const result = await cityService.findCities(filter, { page, limit });
+      return reply.code(200).send(result);
     } catch (error) {
       fastify.log.error(error);
       return reply.code(500).send({ message: 'Failed to get cities.' });
